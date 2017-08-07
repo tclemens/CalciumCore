@@ -1,0 +1,58 @@
+def properties = new Properties()
+def propertiesFile = file('local.properties')
+
+if (propertiesFile.canRead()) {
+
+    properties.load(propertiesFile.newDataInputStream())
+}
+
+ext {
+
+    bintrayUserName = properties.getProperty('bintray.user.name')
+    bintrayUserKey = properties.getProperty('bintray.user.key')
+    bintrayRepository = properties.getProperty('bintray.repository')
+    bintrayPackage = properties.getProperty('bintray.package')
+    bintrayGPGEnabled = properties.getProperty('bintray.gpg.enabled', 'false').toBoolean()
+    bintrayGPGPassphrase = properties.getProperty('bintray.gpg.passphrase')
+
+    libraryName = properties.getProperty('library.name')
+    libraryDescription = properties.getProperty('library.description')
+    librarySite = properties.getProperty('library.site')
+    libraryVCS = properties.getProperty('library.vcs')
+    libraryGroup = properties.getProperty('library.group', )
+    libraryArtifact = properties.getProperty('library.artifact')
+    libraryVersionName = properties.getProperty('library.version.name')
+    libraryVersionCode = properties.getProperty('library.version.code', '0').toInteger()
+
+    developerID = properties.getProperty('developer.id')
+    developerName = properties.getProperty('developer.name')
+    developerEmail = properties.getProperty('developer.email')
+
+    licenseID = properties.getProperty('license.id')
+    licenseName = properties.getProperty('license.name')
+    licenseSite = properties.getProperty('license.site')
+
+    installEnabled =
+            libraryName &&
+            libraryDescription &&
+            librarySite &&
+            libraryVCS &&
+            libraryGroup &&
+            libraryArtifact &&
+            developerID &&
+            developerName &&
+            developerEmail &&
+            licenseName
+
+    bintrayEnabled =
+            bintrayUserName &&
+            bintrayUserKey &&
+            bintrayRepository &&
+            bintrayPackage &&
+            bintrayGPGEnabled &&
+            bintrayGPGPassphrase &&
+            libraryDescription &&
+            librarySite &&
+            libraryVCS &&
+            licenseID
+}
